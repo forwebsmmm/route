@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-name="leaflet_marker">
+        <div id="leaflet_marker_map" class="leaflet-marker-map"/>
+    </t>
+
+    <t t-name="leaflet_monitor">
+        <div id="leaflet_monitor_map" class="leaflet-monitor-map"/>
+    </t>
+</template>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+tnt_flespi_device_all,tnt.flespi.device,model_tnt_flespi_device,,1,0,0,0
+tnt_flespi_device_log_all,tnt.flespi.device_log,model_tnt_flespi_device_log,,1,0,0,0

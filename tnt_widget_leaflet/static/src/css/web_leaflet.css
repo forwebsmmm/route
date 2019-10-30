@@ -1,0 +1,4 @@
+.leaflet-marker-map,
+.leaflet-monitor-map {
+    height: 480px;
+}

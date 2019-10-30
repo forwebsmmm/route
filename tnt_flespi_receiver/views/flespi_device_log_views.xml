@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tnt.flespi.device.log form view -->
+        <record model="ir.ui.view" id="tnt_flespi_device_log_form">
+            <field name="name">tnt_flespi_device_log_form</field>
+            <field name="model">tnt.flespi.device.log</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <!--
+                            <field name="create_date"/>
+                            -->
+                            <field name="display_datetime"/>
+                        </group>
+                        <group>
+                            <field name="device_id"/>
+                        </group>
+                        <group>
+                            <field name="pos_lat"/>
+                            <field name="pos_lon"/>
+                            <field name="pos_alt"/>
+                            <field name="pos_dir"/>
+                            <field name="pos_spd"/>
+                            <field name="pos_sat"/>
+                        </group>
+                        <group>
+                            <field name="ts"/>
+                            <field name="server_ts"/>
+                            <field name="channel_id"/>
+                            <field name="peer"/>
+                            <field name="protocol_id"/>
+                        </group>
+                        <group>
+                            <field name="battery_voltage"/>
+                            <field name="ext_power_voltage"/>
+                            <field name="gsm_signal_level"/>
+                            <field name="din"/>
+                        </group>
+                        <group>
+                            <field name="c_battery_charge"/>
+                            <field name="c_param5"/>
+                            <field name="c_param100"/>
+                            <field name="c_param101"/>
+                            <field name="c_param112"/>
+                            <field name="c_param113"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- tnt.flespi.device.log list view -->
+        <record model="ir.ui.view" id="tnt_flespi_device_log_list">
+            <field name="name">tnt_flespi_device_log_list</field>
+            <field name="model">tnt.flespi.device.log</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <!--
+                    <field name="create_date"/>
+                    -->
+                    <field name="display_datetime"/>
+                    <field name="device_id"/>
+                    <field name="pos_lat"/>
+                    <field name="pos_lon"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action opening views on tnt.flespi.device.log model -->
+        <record model="ir.actions.act_window" id="tnt_flespi_device_log_action_window">
+            <field name="name">Flespi Device Logs</field>
+            <field name="res_model">tnt.flespi.device.log</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Flespi Receiver menu Device Logs item -->
+        <menuitem name="Device Logs" id="menu_receiver_device_logs"
+                  parent="menu_flespi_receiver"
+                  action="tnt_flespi_device_log_action_window"/>
+    </data>
+</odoo>

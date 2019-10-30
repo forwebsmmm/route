@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tnt.flespi.device.log form view -->
+        <record id="tnt_flespi_device_log_form" model="ir.ui.view">
+            <field name="name">tnt_flespi_device_log_form</field>
+            <field name="model">tnt.flespi.device.log</field>
+            <field name="inherit_id" ref="tnt_flespi_receiver.tnt_flespi_device_log_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//form' position='inside'>
+                    <field name="device_name" invisible="1"/>
+                    <group>
+                        <widget name="leaflet_marker" str="device_name" lat="pos_lat" lng="pos_lon"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

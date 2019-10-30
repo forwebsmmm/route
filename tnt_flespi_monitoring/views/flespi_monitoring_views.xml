@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- tnt.flespi.monitoring form view -->
+        <record model="ir.ui.view" id="tnt_flespi_monitoring_form">
+            <field name="name">tnt_flespi_monitoring_form</field>
+            <field name="model">tnt.flespi.monitoring</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="device_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="ts_from" invisible="1"/>
+                            <field name="date_to"/>
+                            <field name="ts_to" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <widget name="leaflet_monitor" ids="device_ids" ts_from="ts_from" ts_to="ts_to"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- tnt.flespi.monitoring list view -->
+        <record model="ir.ui.view" id="tnt_flespi_monitoring_list">
+            <field name="name">tnt_flespi_monitoring_list</field>
+            <field name="model">tnt.flespi.monitoring</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="device_ids" widget="many2many_tags"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- action opening views on tnt.flespi.monitoring model -->
+        <record model="ir.actions.act_window" id="tnt_flespi_monitoring_action_window">
+            <field name="name">Flespi Monitoring</field>
+            <field name="res_model">tnt.flespi.monitoring</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Flespi Receiver menu Monitoring item -->
+        <menuitem name="Monitoring" id="menu_receiver_monitoring"
+                  parent="tnt_flespi_receiver.menu_flespi_receiver"
+                  action="tnt_flespi_monitoring_action_window"/>
+    </data>
+</odoo>

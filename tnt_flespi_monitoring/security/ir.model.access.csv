@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+tnt_flespi_monitoring_all,tnt.flespi.monitoring,model_tnt_flespi_monitoring,,1,0,0,0
