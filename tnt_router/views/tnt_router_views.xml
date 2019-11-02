@@ -1,0 +1,81 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="tnt_router_view_list">
+      <field name="name">tnt.router.view.list</field>
+      <field name="model">tnt.router</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="customers" widget="many2many_tags"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="tnt_router_view_form">
+    <field name="name">tnt.router.view.form</field>
+    <field name="model">tnt.router</field>
+    <field name="arch" type="xml">
+        <form>
+            <group>
+                <group>
+                    <field name="name"/>
+                    <field name="from_customer"/>
+                </group>
+                <group>
+                    <field name="customers" widget="many2many_tags"/>
+                </group>
+            </group>
+            <notebook>
+                <page string="Map">
+                    <group>
+                    </group>
+<!--                    <group>-->
+<!--                        <field name="log_ids" nolabel="1">-->
+<!--                            <tree>-->
+<!--                                <field name="display_datetime"/>-->
+<!--                                <field name="c_param5"/>-->
+<!--                                <field name="pos_spd"/>-->
+<!--                                <field name="pos_lat"/>-->
+<!--                                <field name="pos_lon"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                    </group>-->
+                </page>
+                <page string="Points">
+<!--                    <group>-->
+<!--                        <field name="log_ids" nolabel="1">-->
+<!--                            <tree>-->
+<!--                                <field name="display_datetime"/>-->
+<!--                                <field name="c_param5"/>-->
+<!--                                <field name="pos_spd"/>-->
+<!--                                <field name="pos_lat"/>-->
+<!--                                <field name="pos_lon"/>-->
+<!--                            </tree>-->
+<!--                        </field>-->
+<!--                    </group>-->
+                </page>
+            </notebook>
+        </form>
+    </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="tnt_router_action_window">
+      <field name="name">Routes</field>
+      <field name="res_model">tnt.router</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Logistic" id="tnt_router_menu" sequence="116"/>
+
+    <menuitem name="Router" id="tnt_router_menu_router"
+              parent="tnt_router_menu"/>
+
+    <menuitem name="Routes" id="tnt_router_menu_router_routes"
+              parent="tnt_router_menu_router"
+              action="tnt_router_action_window"/>
+
+<!--    <menuitem name="Points" id="tnt_router.menu_router_points"-->
+<!--          parent="tnt_router.menu_router"-->
+<!--          action=""/>-->
+</data>
+</odoo>
