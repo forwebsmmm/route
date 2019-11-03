@@ -233,6 +233,166 @@ odoo.define('web_widget_leaflet', function (require) {
     core.form_custom_registry.add('leaflet_monitor', LeafletMonitor);
     widgetRegistry.add('leaflet_monitor', LeafletMonitor);
 
+    /* leaflet_router */
+    var router_data = {};
+
+    const blueIcon = L.icon({
+        iconUrl: '/tnt_router/static/src/img/marker-icon-blue.png',
+        shadowUrl: '/tnt_router/static/src/img/marker-shadow.png',
+        iconAnchor: [12, 45],
+        popupAnchor: [0, -35]
+    });
+
+    const greenIcon = L.icon({
+        iconUrl: '/tnt_router/static/src/img/marker-icon-green.png',
+        shadowUrl: '/tnt_router/static/src/img/marker-shadow.png',
+        iconAnchor: [12, 45],
+        popupAnchor: [0, -35]
+    });
+
+    var LeafletRouter = Widget.extend({
+        template: 'leaflet_router',
+
+        init: function (view, record, node) {
+            this._super(view, record, node);
+
+            this.shown = $.Deferred();
+            this.data = record.data;
+            this.mode = view.mode || 'readonly';
+            this.record = record;
+            this.view = view;
+
+            var self = this;
+
+            this.map_data = {
+                markers: [],
+                polylines: [],
+            };
+
+            this.field_id = node.attrs.id;
+//            this.field_customers = node.attrs.customers;
+//            this.field_from_customer = node.attrs.from_customer;
+        },
+
+        start: function() {
+            var self = this;
+            if (typeof L == 'undefined') {
+                window.ginit = this.on_ready;
+            }
+            else {
+                setTimeout(function () { self.on_ready(); }, 1000);
+            }
+            return this._super();
+        },
+
+        on_ready: function(){
+            var self = this;
+
+            if (typeof this.map_data.map == 'undefined') {
+                this.init_map();
+            }
+
+            self.update_map(true);
+
+//            this.map_data.interval = setInterval(function() {
+//                self.update_map();
+//            }, 10000);
+        },
+
+//        destroy: function(){
+//            clearInterval(this.map_data.interval);
+//            return this._super();
+//        },
+
+        init_map: function(){
+            this.map_data.map = L.map(this.$el[0]).setView([51.505, -0.09], 13);
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox.streets',
+                accessToken: 'pk.eyJ1IjoiZGltZ3VubmVyIiwiYSI6ImNrMHV2b3l5ZTBxYmYzb3FyZjMyNWViZWQifQ.UYReY5yOa8p-cbbt6SjdXQ'
+            }).addTo(this.map_data.map);
+        },
+
+        update_map: function(fit_bounds){
+            var self = this;
+
+            var params = {
+                id: this.data[this.field_id]
+//                customers: [],
+//                from_customer: this.data[this.field_from_customer],
+            };
+
+//            $(this.data[this.field_customers].data).each(function() {
+//                params.customers.push((this).data.id);
+//            });
+
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/leaflet/router',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({
+                    'jsonrpc': '2.0',
+                    'method': 'call',
+                    'params': params,
+                }),
+                success: function (data) {
+                    console.log('success');
+                    var b = [],
+                        markers = [];
+//                        polylines = [];
+
+                    $(data.result).each(function(i, e) {
+                        b.push([e.pos_lat, e.pos_lon]);
+
+//                        var t = [];
+//                        $(e.data).each(function(i, e) {
+//                            b.push([e.pos_lat, e.pos_lon]);
+//                            t.push([e.pos_lat, e.pos_lon]);
+//                        });
+
+                        let m_icon = (e.from_customer) ? greenIcon : blueIcon;
+
+                        markers.push({
+                            'name': e.name,
+                            'marker': L.marker([e.pos_lat, e.pos_lon],
+                                               {icon: m_icon}),
+//                            'polyline': L.polyline(t, {color: 'blue'}),
+                        });
+                    });
+
+                    // remove old markers
+//                    $(self.map_data.markers).each(function(i, e) {
+//                        self.map_data.map.removeLayer(e.marker);
+//                        polylines.push(e.polyline);
+//                    });
+
+                    self.map_data.markers = markers;
+
+                    // add new markers & polylines
+                    $(self.map_data.markers).each(function(i, e) {
+                        e.marker.addTo(self.map_data.map).bindPopup(e.name);  // .openPopup()
+//                        e.polyline.addTo(self.map_data.map);
+                    });
+
+                    // remove old polylines
+//                    $(polylines).each(function(i, e) {
+//                        self.map_data.map.removeLayer(e);
+//                    });
+
+                    if (fit_bounds && (b.length > 0)) {
+                        self.map_data.map.fitBounds(b);
+                    }
+                },
+            });
+        }
+    });
+
+    core.form_custom_registry.add('leaflet_router', LeafletRouter);
+    widgetRegistry.add('leaflet_router', LeafletRouter);
+
+
     return {
         leaflet_marker: LeafletMarker,
         leaflet_monitor: LeafletMonitor,

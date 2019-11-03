@@ -13,6 +13,10 @@ class TntRouter(models.Model):
                                     domain="[('is_company','=',1)]")
     customers = fields.Many2many('res.partner', string='Customers',  domain="[('customer','=',1), ('parent_id','=',False)]")
 
+    @api.multi
+    def route_generator(self):
+        return True
+
 
 class TntRoutePoint(models.Model):
     _name = 'tnt.route.point'

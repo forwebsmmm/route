@@ -7,4 +7,8 @@
     <t t-name="leaflet_monitor">
         <div id="leaflet_monitor_map" class="leaflet-monitor-map"/>
     </t>
+
+    <t t-name="leaflet_router">
+        <div id="leaflet_router_map" class="leaflet-router-map"/>
+    </t>
 </template>

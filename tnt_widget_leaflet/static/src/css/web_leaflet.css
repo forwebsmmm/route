@@ -1,4 +1,5 @@
 .leaflet-marker-map,
-.leaflet-monitor-map {
+.leaflet-monitor-map,
+.leaflet-router-map {
     height: 480px;
 }
