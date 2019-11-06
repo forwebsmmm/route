@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "tnt: router",
+    'name': "tnt: Router",
 
     'summary': """
         Leaflet Router

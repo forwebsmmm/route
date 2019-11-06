@@ -20,7 +20,6 @@
                 <group>
                     <field name="name"/>
                     <field name="from_customer"/>
-                    <button name="route_generator" class="btn btn-primary" type="object" string="Create Route" />
                 </group>
                 <group>
                     <field name="customers" widget="many2many_tags"/>
@@ -43,18 +42,24 @@
 <!--                        </field>-->
 <!--                    </group>-->
                 </page>
+                <page string="Ordered">
+                    <field name="sequence_ids" nolabel="1">
+                        <tree>
+                            <field name="sequence"/>
+                            <field name="customer"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </tree>
+                    </field>
+                </page>
                 <page string="Points">
-<!--                    <group>-->
-<!--                        <field name="log_ids" nolabel="1">-->
-<!--                            <tree>-->
-<!--                                <field name="display_datetime"/>-->
-<!--                                <field name="c_param5"/>-->
-<!--                                <field name="pos_spd"/>-->
-<!--                                <field name="pos_lat"/>-->
-<!--                                <field name="pos_lon"/>-->
-<!--                            </tree>-->
-<!--                        </field>-->
-<!--                    </group>-->
+                    <field name="points_ids" nolabel="1">
+                        <tree>
+                            <field name="sequence"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </tree>
+                    </field>
                 </page>
             </notebook>
         </form>

@@ -234,7 +234,8 @@ odoo.define('web_widget_leaflet', function (require) {
     widgetRegistry.add('leaflet_monitor', LeafletMonitor);
 
     /* leaflet_router */
-    var router_data = {};
+    var router_data = {
+    };
 
     const blueIcon = L.icon({
         iconUrl: '/tnt_router/static/src/img/marker-icon-blue.png',
@@ -288,6 +289,47 @@ odoo.define('web_widget_leaflet', function (require) {
         on_ready: function(){
             var self = this;
 
+            $('#btn_generate').click(function() {
+                var params = {
+                    id: self.data[self.field_id]
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: '/leaflet/generate',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({
+                        'jsonrpc': '2.0',
+                        'method': 'call',
+                        'params': params,
+                    }),
+                    success: function (data) {
+                        var b = [];
+
+                        var t = [];
+                        $(data.result).each(function(i, e) {
+                            b.push([e.latitude, e.longitude]);
+                            t.push([e.latitude, e.longitude]);
+                        });
+                        console.log(t);
+                        console.log('success');
+
+                        var p = L.polyline(t, {color: 'blue'});
+                        p.addTo(self.map_data.map);
+
+                        // remove old polylines
+    //                    $(polylines).each(function(i, e) {
+    //                        self.map_data.map.removeLayer(e);
+    //                    });
+
+                        if ((b.length > 0)) {
+                            self.map_data.map.fitBounds(b);
+                        }
+                    },
+                });
+            });
+
             if (typeof this.map_data.map == 'undefined') {
                 this.init_map();
             }
@@ -305,7 +347,8 @@ odoo.define('web_widget_leaflet', function (require) {
 //        },
 
         init_map: function(){
-            this.map_data.map = L.map(this.$el[0]).setView([51.505, -0.09], 13);
+            this.map_data.map = L.map(this.$el[2]).setView([51.505, -0.09], 13);
+//            this.map_data.map = L.map($('#leaflet_router_map')).setView([51.505, -0.09], 13);
             L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,

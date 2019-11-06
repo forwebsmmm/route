@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 tnt_router_all,tnt.router,model_tnt_router,,1,0,0,0
 tnt_res_partner_all,tnt.res.partner,base.model_res_partner,,1,0,0,0
+tnt_router_sequence_all,tnt.router.sequence,model_tnt_router_sequence,,1,1,1,1
+tnt_router_point_all,tnt.router.point,model_tnt_router_point,,1,1,1,1
