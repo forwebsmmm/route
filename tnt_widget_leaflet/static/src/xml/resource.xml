@@ -9,7 +9,6 @@
     </t>
 
     <t t-name="leaflet_router">
-        <button id="btn_generate" class="btn btn-primary mb-10">Generate</button>
         <div id="leaflet_router_map" class="leaflet-router-map"/>
     </t>
 </template>
