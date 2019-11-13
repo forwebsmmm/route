@@ -16,6 +16,20 @@ class TntRouter(models.Model):
     customers = fields.Many2many('res.partner', string='Customers',  domain="[('customer','=',1), ('parent_id','=',False)]")
     sequence_ids = fields.One2many('tnt.router.sequence', 'route', 'Sequences')
     points_ids = fields.One2many('tnt.router.point', 'route', 'Points')
+    transport_type = fields.Selection([
+        ('driving-car', 'Car'),
+        ('driving-hgv', 'Heavy Vehicle'),
+        ('foot-walking', 'Walking'),
+        ('foot-hiking', 'Hiking'),
+        ('cycling-regular', 'Bicycle'),
+        ('cycling-road', 'Road bike'),
+        ('cycling-mountain', 'Mountain bike '),
+        ('cycling-electric', 'E-bike'),
+    ], string='Type', default='driving-car')
+
+    @api.multi
+    def generate_route(self):
+        return True
 
 
 class TntRouterPoint(models.Model):
